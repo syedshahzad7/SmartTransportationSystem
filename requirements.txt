@@ -1,2 +1,3 @@
 numpy
+sumolib traci
 -e .

@@ -1,0 +1,6 @@
+<net>
+    <!-- Example minimal network with two junctions connected by one edge -->
+    <junction id="0" x="0.0" y="0.0" type="traffic_light" />
+    <junction id="1" x="500.0" y="0.0" type="traffic_light" />
+    <edge id="road0" from="0" to="1" numLanes="1" speed="13.9" />
+</net>
