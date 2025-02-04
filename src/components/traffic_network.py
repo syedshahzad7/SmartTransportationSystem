@@ -8,14 +8,8 @@ class TrafficNetwork:
         """
         Manages intersections, vehicles, and signal states.
         """
-        self.network = {}   # adjacency list: intersection_id -> [connected_intersections]
-        self.vehicles = {}  # intersection_id -> [list of vehicles]
-        # signals[intersection_id] = {
-        #     "state": "red" or "green",
-        #     "green_duration": int,
-        #     "red_duration": int,
-        #     "counter": int
-        # }
+        self.network = {}   
+        self.vehicles = {}  
         self.signals = {}
 
     def add_intersection(self, intersection_id, green_duration=2, red_duration=2):

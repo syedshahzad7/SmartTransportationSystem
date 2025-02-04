@@ -7,9 +7,7 @@ class AnomalyInjector:
     This class introduces anomalies into the traffic flow.
     """
     def __init__(self, network):
-        """
-        :param network: An instance of TrafficNetwork.
-        """
+        
         self.network = network
         # vehicle_id -> steps_remaining to remain stopped
         self.stopped_vehicles = {}
@@ -82,10 +80,6 @@ class AnomalyInjector:
             raise CustomException(e, sys)
 
     def apply_stops(self, snapshot):
-        """
-        Before vehicles move, remove 'stopped' vehicles from the snapshot 
-        so they cannot move. Decrement their stop counters each step.
-        """
         try:
             for vehicle_id, steps_remaining in list(self.stopped_vehicles.items()):
                 if steps_remaining > 0:

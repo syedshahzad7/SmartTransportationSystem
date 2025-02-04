@@ -1,17 +1,10 @@
-# src/components/anomaly_detector.py
-
 import sys
 from src.exception import CustomException
 from src.logger import logging
 
 class AnomalyDetector:
     def __init__(self, network, anomaly_injector=None, known_vehicles=None):
-        """
-        :param network: Instance of your TrafficNetwork class
-        :param anomaly_injector: (Optional) reference to AnomalyInjector 
-                                 so we can see which vehicles are intentionally stopped.
-        :param known_vehicles: A set of vehicle IDs that are valid in the system
-        """
+        
         self.network = network
         self.anomaly_injector = anomaly_injector
 
@@ -19,18 +12,11 @@ class AnomalyDetector:
         self.known_vehicles = known_vehicles if known_vehicles else set()
 
     def update_known_vehicles(self, additional_vehicles):
-        """
-        Dynamically add new vehicles to the list of known/authorized vehicles,
-        if you want to grant them access.
-        """
+        
         self.known_vehicles.update(additional_vehicles)
 
     def detect_anomalies(self, snapshot, new_positions):
-        """
-        Main method to detect anomalies based on:
-          - the snapshot (vehicles + signals before movement)
-          - new_positions (vehicles after movement).
-        """
+        
         try:
             detected_anomalies = []
 
@@ -49,7 +35,6 @@ class AnomalyDetector:
                 self._detect_unexpected_stops(snapshot, new_positions)
             )
 
-            # Log each anomaly
             for anomaly in detected_anomalies:
                 logging.warning(anomaly)
 
@@ -59,10 +44,7 @@ class AnomalyDetector:
             raise CustomException(e, sys)
 
     def _detect_red_light_violations(self, snapshot):
-        """
-        A vehicle is considered a red-light violator if it moved
-        from an intersection that was red in the snapshot.
-        """
+        
         anomalies = []
         for intersection_id, vehicles_list in snapshot.items():
             signal_state = self.network.signals[intersection_id]['state']
@@ -97,9 +79,6 @@ class AnomalyDetector:
           1) Its intersection was green.
           2) The vehicle was not intentionally stopped by anomaly_injector.
           3) The intersection had at least one road to move to (i.e., not isolated).
-        
-        NOTE: This logic is basic. Real logic might also check
-              if a vehicle 'wanted' or 'needed' to move.
         """
         anomalies = []
         for intersection_id, old_vehicles in snapshot.items():
@@ -132,10 +111,7 @@ class AnomalyDetector:
         return anomalies
 
     def _vehicles_that_stayed(self, intersection_id, old_vehicles, new_positions):
-        """
-        Helper method: find which vehicles are in the same intersection 
-        before and after the movement.
-        """
+        
         old_set = set(old_vehicles)
         new_set = set(new_positions[intersection_id])
         stayed_vehicles = old_set & new_set  # intersection of both sets

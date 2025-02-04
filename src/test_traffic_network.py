@@ -1,5 +1,3 @@
-# src/test_traffic_network.py
-
 from src.components.traffic_network import TrafficNetwork
 from src.components.anomaly_injector import AnomalyInjector
 from src.components.anomaly_detector import AnomalyDetector
@@ -25,7 +23,7 @@ def run_test():
     injector = AnomalyInjector(network)
 
     # 6) Create anomaly detector
-    #    We'll assume Car1, Car2, Car3 are known. 
+    #    Car1, Car2, Car3 are known. 
     #    Anything else is unauthorized.
     detector = AnomalyDetector(network, anomaly_injector=injector,
                                known_vehicles={"Car1", "Car2", "Car3"})
